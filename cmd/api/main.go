@@ -18,16 +18,20 @@ import (
 const timeBeforeTimeout = 15
 
 func main() {
-	logger.InitLogger("media")
+	logger.InitLogger("media", logger.EmailConfig{
+		From:     os.Getenv("EMAIL_FROM"),
+		Password: os.Getenv("EMAIL_PASSWORD"),
+		Level:    os.Getenv("EMAIL_LEVEL"),
+	})
 
 	verification.Init(verification.VerificationConfig{
 		VerificationURL: "http://uacl/authorize",
 	})
 
 	middlewares.Init(middlewares.Config{
-		AllowedOrigin:  "*",
-		AllowedMethods: "GET,POST,OPTIONS",
-		AllowedHeaders: "*",
+		AllowedOrigins: os.Getenv("ALLOWED_ORIGINS"),
+		AllowedMethods: "GET,POST,OPTIONS,DELETE",
+		AllowedHeaders: "Accept, Content-Type, Content-Length, Accept-Encoding, Authorization, X-CSRF-Token",
 	})
 
 	router := api.CreateRouter()
