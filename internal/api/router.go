@@ -22,5 +22,9 @@ func CreateRouter() http.Handler {
 		r.Post("/", uploadImage)
 	})
 
+	r.With(verification.VerifyJTW()).Route("/user_profile", func(r chi.Router) {
+		r.Post("/", uploadUserImage)
+	})
+
 	return r
 }
