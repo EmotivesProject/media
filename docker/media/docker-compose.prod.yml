@@ -36,6 +36,7 @@ services:
       - "traefik.http.routers.media.rule=Host(`media.emotives.net`)"
       - "traefik.http.routers.media.tls=true"
       - "traefik.http.routers.media.tls.certresolver=letsencrypt"
+      - "traefik.docker.network=traefik"
     restart: unless-stopped
     volumes:
       - images:/usr/share/nginx/html/images
