@@ -17,8 +17,10 @@ jobs:
       - name: Build image
         run: ./scripts/build.sh
       - name: Log in and push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
         run: |
-          echo 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 | docker login ghcr.io -u imthetom --password-stdin
+          echo $GITHUB_TOKEN | docker login ghcr.io -u imthetom --password-stdin
           docker push ghcr.io/tombowyerresearchproject/media_api:latest
           docker push ghcr.io/tombowyerresearchproject/media_server:latest
       - name: Connect and deploy
