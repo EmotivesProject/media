@@ -20,6 +20,7 @@ RUN go build ./cmd/api
 FROM scratch
 
 COPY --from=builder /app/api /api
+COPY --from=builder /app/static /images
 
 EXPOSE 80
 

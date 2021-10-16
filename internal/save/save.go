@@ -15,6 +15,7 @@ const randomLength = 10
 
 var fileDir = os.Getenv("FILE_LOCATION")
 
+// nolint
 func SaveFile(imageData *image.Image, filename, username string, randomise bool) (string, error) {
 	path, err := setUpPathForUser(username)
 	if err != nil {

@@ -50,6 +50,33 @@ func uploadImage(w http.ResponseWriter, r *http.Request) {
 	response.ResultResponseJSON(w, false, http.StatusCreated, uploadedFile)
 }
 
+func uploadUserImage(w http.ResponseWriter, r *http.Request) {
+	username, file, handle, err := extractDetailsFromRequest(r)
+	if err != nil {
+		logger.Error(err)
+		response.ResultResponseJSON(w, false, http.StatusBadRequest, response.Message{Message: err.Error()})
+
+		return
+	}
+
+	filePath, err := decodeAndSave(file, handle, username, "user", false)
+	if err != nil {
+		logger.Error(err)
+		response.ResultResponseJSON(w, false, http.StatusInternalServerError, response.Message{Message: err.Error()})
+
+		return
+	}
+
+	uploadedFile := model.File{
+		Owner:    username,
+		Location: filePath,
+	}
+
+	logger.Infof("Created image at %s", filePath)
+
+	response.ResultResponseJSON(w, false, http.StatusCreated, uploadedFile)
+}
+
 func extractDetailsFromRequest(r *http.Request) (
 	string,
 	multipart.File,
