@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: ../../.
+      dockerfile: docker/media/Dockerfile
+    volumes:
+      - images:/images
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      HOST: 0.0.0.0
+      PORT: 80
+      FILE_LOCATION: "/images"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.media-upload.rule=Host(`media-upload.localhost`)"
+      - "traefik.http.routers.media-upload.entrypoints=web"
+      - "traefik.docker.network=traefik"
+    restart: unless-stopped
+    networks:
+      traefik:
+      default:
+      emotives:
+        aliases:
+          - media
+  server:
+    build:
+      context: ../../.
+      dockerfile: docker/media/Dockerfile.server
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.media.rule=Host(`media.localhost`)"
+      - "traefik.http.routers.media.entrypoints=web"
+      - "traefik.docker.network=traefik"
+    restart: unless-stopped
+    volumes:
+      - images:/usr/share/nginx/html/images
+    networks:
+      traefik:
+      default:
+      emotives:
+        aliases:
+          - media-server
+
+volumes:
+  images:
+
+networks:
+  emotives:
+    external:
+      name: emotives
+  default:
+  traefik:
+    external:
+      name: traefik

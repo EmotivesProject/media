@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+  api:
+    image: ghcr.io/tombowyerresearchproject/media_api:latest
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - images:/images
+    logging:
+      driver: syslog
+    environment:
+      HOST: 0.0.0.0
+      PORT: 80
+      FILE_LOCATION: "/images"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.media-upload.rule=Host(`media-upload.emotives.net`)"
+      - "traefik.http.routers.media-upload.tls=true"
+      - "traefik.http.routers.media-upload.tls.certresolver=letsencrypt"
+      - "traefik.docker.network=traefik"
+    restart: unless-stopped
+    networks:
+      traefik:
+      default:
+      emotives:
+        aliases:
+          - media
+  server:
+    image: ghcr.io/tombowyerresearchproject/media_server:latest
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.media.rule=Host(`media.emotives.net`)"
+      - "traefik.http.routers.media.tls=true"
+      - "traefik.http.routers.media.tls.certresolver=letsencrypt"
+    restart: unless-stopped
+    volumes:
+      - images:/usr/share/nginx/html/images
+    networks:
+      traefik:
+      default:
+      emotives:
+        aliases:
+          - media-server
+
+volumes:
+  images:
+
+networks:
+  emotives:
+    external:
+      name: emotives
+  default:
+  traefik:
+    external:
+      name: traefik
