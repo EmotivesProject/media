@@ -12,6 +12,10 @@ services:
       HOST: 0.0.0.0
       PORT: 80
       FILE_LOCATION: "/images"
+      EMAIL_FROM: emotives.acc@gmail.com
+      EMAIL_PASSWORD: "${GMAIL_PASSWORD:-}"
+      EMAIL_LEVEL: PROD
+      ALLOWED_ORIGINS: https://emotives.net,https://www.emotives.net
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.media-upload.rule=Host(`media-upload.emotives.net`)"

@@ -12,6 +12,9 @@ services:
       HOST: 0.0.0.0
       PORT: 80
       FILE_LOCATION: "/images"
+      CHATTER_AUTH: devSecret
+      AUTOLOGIN_CREATE_USERS: imtom,
+      ALLOWED_ORIGINS: http://localhost
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.media-upload.rule=Host(`media-upload.localhost`)"
