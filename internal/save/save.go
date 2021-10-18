@@ -3,7 +3,7 @@ package save
 import (
 	"fmt"
 	"image"
-	"image/jpeg"
+	"image/png"
 	"os"
 	"path/filepath"
 	"strings"
@@ -50,7 +50,7 @@ func createFinalFilename(filename string, randomise bool) string {
 		filename = fmt.Sprintf("%s_%s", generatedFilename, filename)
 	}
 
-	filename = fmt.Sprintf("%s.jpg", filename)
+	filename = fmt.Sprintf("%s.png", filename)
 	logger.Infof("Saving file with %s", filename)
 
 	return filename
@@ -64,7 +64,7 @@ func saveFile(filename, path, username string, imageData *image.Image) (string, 
 		return "", err
 	}
 
-	err = jpeg.Encode(file, *imageData, nil)
+	err = png.Encode(file, *imageData)
 	urlPath := fmt.Sprintf("%s/%s/%s", fileDir, username, filename)
 
 	return urlPath, err
