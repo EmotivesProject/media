@@ -131,14 +131,14 @@ func decodeAndSave(
 			return "", err
 		}
 
-		return save.SaveFile(&image, fileName, username, randomise)
+		return save.File(&image, fileName, username, randomise)
 	case "image/png":
 		image, err := png.Decode(file)
 		if err != nil {
 			return "", err
 		}
 
-		return save.SaveFile(&image, fileName, username, randomise)
+		return save.File(&image, fileName, username, randomise)
 	default:
 		return "", messages.ErrIncorrectImage
 	}
