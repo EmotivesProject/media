@@ -18,7 +18,7 @@ func TestSaveImage(t *testing.T) {
 	file, _ := os.Open("../../images/blank.jpg")
 	image, _ := jpeg.Decode(file)
 
-	_, err := save.SaveFile(
+	_, err := save.File(
 		&image,
 		"nothing.jgp",
 		"test",
