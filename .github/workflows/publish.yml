@@ -26,15 +26,13 @@ jobs:
       - name: Connect and deploy
         uses: appleboy/ssh-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
           GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          envs: GITHUB_TOKEN,GMAIL_PASSWORD
+          envs: GMAIL_PASSWORD
           script: |
-            echo $GITHUB_TOKEN | docker login ghcr.io -u imthetom --password-stdin
             docker pull ghcr.io/tombowyerresearchproject/media_api:latest
             docker pull ghcr.io/tombowyerresearchproject/media_server:latest
             rm -R media
