@@ -10,9 +10,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/TomBowyerResearchProject/common/logger"
-	"github.com/TomBowyerResearchProject/common/middlewares"
-	"github.com/TomBowyerResearchProject/common/verification"
+	"github.com/EmotivesProject/common/logger"
+	"github.com/EmotivesProject/common/middlewares"
+	"github.com/EmotivesProject/common/verification"
 )
 
 const timeBeforeTimeout = 15

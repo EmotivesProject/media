@@ -3,7 +3,7 @@ package test
 import (
 	"os"
 
-	"github.com/TomBowyerResearchProject/common/logger"
+	"github.com/EmotivesProject/common/logger"
 )
 
 func SetUpIntegrationTest() {
