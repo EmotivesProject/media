@@ -21,8 +21,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
         run: |
           echo $GITHUB_TOKEN | docker login ghcr.io -u imthetom --password-stdin
-          docker push ghcr.io/tombowyerresearchproject/media_api:latest
-          docker push ghcr.io/tombowyerresearchproject/media_server:latest
+          docker push ghcr.io/emotivesproject/media_api:latest
+          docker push ghcr.io/emotivesproject/media_server:latest
       - name: Connect and deploy
         uses: appleboy/ssh-action@master
         env:
@@ -33,9 +33,9 @@ jobs:
           key: ${{ secrets.KEY }}
           envs: GMAIL_PASSWORD
           script: |
-            docker pull ghcr.io/tombowyerresearchproject/media_api:latest
-            docker pull ghcr.io/tombowyerresearchproject/media_server:latest
+            docker pull ghcr.io/emotivesproject/media_api:latest
+            docker pull ghcr.io/emotivesproject/media_server:latest
             rm -R media
-            git clone git@github.com:TomBowyerResearchProject/media.git
+            git clone git@github.com:EmotivesProject/media.git
             cd media
             ./scripts/start.sh prod no $GMAIL_PASSWORD

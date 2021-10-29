@@ -2,7 +2,7 @@ version: '3'
 
 services:
   api:
-    image: ghcr.io/tombowyerresearchproject/media_api:latest
+    image: ghcr.io/emotivesproject/media_api:latest
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - images:/images
@@ -30,7 +30,7 @@ services:
         aliases:
           - media
   server:
-    image: ghcr.io/tombowyerresearchproject/media_server:latest
+    image: ghcr.io/emotivesproject/media_server:latest
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.media.rule=Host(`media.emotives.net`)"
